@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rings Jewelry - Elegant Collection</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Rings Jewelry</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero" id="home">
+        <h1>Discover Timeless Elegance</h1>
+        <p>Explore our exquisite collection of rings, crafted with precision and passion.</p>
+        <a href="#products" class="cta-button">Shop Now</a>
+    </section>
+
+    <section class="products" id="products">
+        <h2>Our Ring Collection</h2>
+        <div class="product-grid">
+            <div class="card">
+                <img src="./ring1.jpg" alt="Diamond Engagement Ring">
+                <div class="card-content">
+                    <h3>Diamond Engagement Ring</h3>
+                    <p>A stunning solitaire diamond set in white gold, perfect for that special moment.</p>
+                    <div class="price">$2,500</div>
+                </div>
+            </div>
+            <div class="card">
+                <img src="./ring2.jpg" alt="Sapphire Band">
+                <div class="card-content">
+                    <h3>Sapphire Band</h3>
+                    <p>Elegant sapphire stones arranged in a delicate band, symbolizing loyalty and wisdom.</p>
+                    <div class="price">$1,200</div>
+                </div>
+            </div>
+            <div class="card">
+                <img src="./ring3.jpg" alt="Gold Eternity Ring">
+                <div class="card-content">
+                    <h3>Gold Eternity Ring</h3>
+                    <p>Timeless design with pavé diamonds encircling the band, representing eternal love.</p>
+                    <div class="price">$1,800</div>
+                </div>
+            </div>
+            <div class="card">
+                <img src="./ring4.jpg" alt="Vintage Style Ring">
+                <div class="card-content">
+                    <h3>Vintage Style Ring</h3>
+                    <p>Inspired by classic designs, featuring intricate filigree work and a central gemstone.</p>
+                    <div class="price">$950</div>
+                </div>
+            </div>
+            <div class="card">
+                <img src="./ring5.jpg" alt="Minimalist Band">
+                <div class="card-content">
+                    <h3>Minimalist Band</h3>
+                    <p>Simple yet sophisticated, a thin gold band that's perfect for everyday wear.</p>
+                    <div class="price">$300</div>
+                </div>
+            </div>
+            <div class="card">
+                <img src="./ring6.jpg" alt="Emerald Cocktail Ring">
+                <div class="card-content">
+                    <h3>Emerald Cocktail Ring</h3>
+                    <p>Bold and glamorous, featuring a large emerald stone surrounded by smaller diamonds.</p>
+                    <div class="price">$3,200</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <p>&copy; 2023 Rings Jewelry. All rights reserved.</p>
+        <p>Contact us: info@ringsjewelry.com | Phone: (555) 123-4567</p>
+    </footer>
+
+    <!-- Chatbot Widget -->
+    <div id="chatbot-widget">
+        <div id="chatbot-toggle">
+            <span>💬</span>
+        </div>
+        <div id="chatbot-container" class="hidden">
+            <div id="chatbot-header">
+                <h4>Rings Jewelry Assistant</h4>
+                <button id="chatbot-close">&times;</button>
+            </div>
+            <div id="chatbot-messages"></div>
+            <div id="chatbot-input">
+                <input type="text" id="user-input" placeholder="Type your message...">
+                <button id="send-button">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simple hamburger menu toggle for mobile
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Chatbot functionality
+        const chatbotToggle = document.getElementById('chatbot-toggle');
+        const chatbotContainer = document.getElementById('chatbot-container');
+        const chatbotClose = document.getElementById('chatbot-close');
+        const chatbotMessages = document.getElementById('chatbot-messages');
+        const userInput = document.getElementById('user-input');
+        const sendButton = document.getElementById('send-button');
+
+        let conversationState = 'greeting';
+        let selectedRing = '';
+
+        const rings = [
+            { name: 'Diamond Engagement Ring', price: '$2,500' },
+            { name: 'Sapphire Band', price: '$1,200' },
+            { name: 'Gold Eternity Ring', price: '$1,800' },
+            { name: 'Vintage Style Ring', price: '$950' },
+            { name: 'Minimalist Band', price: '$300' },
+            { name: 'Emerald Cocktail Ring', price: '$3,200' }
+        ];
+
+        function addMessage(message, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            messageDiv.textContent = message;
+            chatbotMessages.appendChild(messageDiv);
+            chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+        }
+
+        function showOptions(options) {
+            const optionsDiv = document.createElement('div');
+            optionsDiv.className = 'options';
+            options.forEach(option => {
+                const button = document.createElement('button');
+                button.textContent = option.text;
+                button.onclick = option.action;
+                optionsDiv.appendChild(button);
+            });
+            chatbotMessages.appendChild(optionsDiv);
+            chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+        }
+
+        function startConversation() {
+            addMessage('Hello! Welcome to Rings Jewelry. How can I help you today?', 'bot');
+            showOptions([
+                { text: 'Book a Ring', action: () => selectRing() },
+                { text: 'Ask about Products', action: () => addMessage('Our rings are crafted with premium materials. What would you like to know?', 'bot') }
+            ]);
+        }
+
+        function selectRing() {
+            addMessage('Great! Which ring would you like to book?', 'bot');
+            const ringOptions = rings.map((ring, index) => ({
+                text: `${ring.name} - ${ring.price}`,
+                action: () => confirmBooking(ring.name)
+            }));
+            showOptions(ringOptions);
+        }
+
+        function confirmBooking(ringName) {
+            selectedRing = ringName;
+            addMessage(`You selected: ${ringName}. Would you like to proceed with booking?`, 'bot');
+            showOptions([
+                { text: 'Yes, book it!', action: () => bookRing() },
+                { text: 'No, choose another', action: () => selectRing() }
+            ]);
+        }
+
+        function bookRing() {
+            addMessage('Perfect! To complete your booking, please contact us directly.', 'bot');
+            const whatsappLink = `https://wa.me/917794091706?text=Hi, I would like to book the ${selectedRing}`;
+            const linkDiv = document.createElement('div');
+            linkDiv.innerHTML = `<a href="${whatsappLink}" target="_blank" class="whatsapp-link">📱 Message us on WhatsApp to book</a>`;
+            chatbotMessages.appendChild(linkDiv);
+            chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+        }
+
+        chatbotToggle.addEventListener('click', () => {
+            chatbotContainer.classList.toggle('hidden');
+            if (!chatbotContainer.classList.contains('hidden') && chatbotMessages.children.length === 0) {
+                startConversation();
+            }
+        });
+
+        chatbotClose.addEventListener('click', () => {
+            chatbotContainer.classList.add('hidden');
+        });
+
+        sendButton.addEventListener('click', () => {
+            const message = userInput.value.trim();
+            if (message) {
+                addMessage(message, 'user');
+                userInput.value = '';
+                // Simple response for custom messages
+                addMessage('I\'m here to help with ring bookings. Please use the options above or ask about our products!', 'bot');
+            }
+        });
+
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendButton.click();
+            }
+        });
+    </script>
+</body>
+</html>
